@@ -11,6 +11,16 @@
         public bool IsAlive { get; set; } = true;
 
         /// <summary>
+        /// Gets or sets the name of the monster.
+        /// </summary>
+        public string? Name { get; set; }
+        
+        /// <summary>
+        /// Gets or sets the element of the monster.
+        /// </summary>
+        public string? Element { get; set; }
+
+        /// <summary>
         /// Activates the monster when the hero and the monster are both in the same room.
         /// Gives the monster a chance to perform its actions.
         /// </summary>

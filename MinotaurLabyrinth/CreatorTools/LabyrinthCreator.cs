@@ -102,12 +102,21 @@
         /// Initializes monsters in the map, ensuring they do not overlap with existing locations.
         /// </summary>
         /// <param name="map">The Map in which monsters should be initialized.</param>
-        private static void InitializeMonsters(Map map)
-        {
-            // Ensure monster locations do not overlap existing locations on the map
-            Location minotaurLocation = ProceduralGenerator.GetRandomLocation();
-            Room room = map.GetRoomAtLocation(minotaurLocation);
-            room.AddMonster(new Minotaur());
-        }
+       private static void InitializeMonsters(Map map)
+{
+    // Ensure monster locations do not overlap existing locations on the map
+    Location guardian1Location = ProceduralGenerator.GetRandomLocation();
+    Room room1 = map.GetRoomAtLocation(guardian1Location);
+    room1.AddMonster(new FireGuardian());
+
+    Location guardian2Location = ProceduralGenerator.GetRandomLocation();
+    Room room2 = map.GetRoomAtLocation(guardian2Location);
+    room2.AddMonster(new EarthGuardian());
+
+    Location guardian3Location = ProceduralGenerator.GetRandomLocation();
+    Room room3 = map.GetRoomAtLocation(guardian3Location);
+    room3.AddMonster(new WaterGuardian());
+}
+
     }
 }

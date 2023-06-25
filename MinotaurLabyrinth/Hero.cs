@@ -8,14 +8,14 @@
         // Contains all the commands that a player can access.
         public CommandList CommandList { get; } = new CommandList();
         // Represents the distance the player can sense danger.
-        // Diagonal adjacent squares have a range of 2 from the player.
+        // Diagonally adjacent squares have a range of 2 from the player.
         public int SenseRange { get; } = 1;
 
         // The player's current location.
         public Location Location { get; set; }
 
         // Indicates whether the player is alive or not.
-        public bool IsAlive { get; private set; } = true;
+        public bool IsAlive { get; set; } = true;
 
         // Indicated whether the player has won the game or not.
         public bool IsVictorious { get; set; }
@@ -28,6 +28,9 @@
 
         // Explains why a player died.
         public string CauseOfDeath { get; private set; } = "";
+
+        // The player's strength.
+        public double Strength { get; set; } = 10;
 
         public void Kill(string cause)
         {
