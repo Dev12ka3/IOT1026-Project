@@ -30,7 +30,7 @@
         public string CauseOfDeath { get; private set; } = "";
 
         // The player's strength.
-        public double Strength { get; set; } = 10;
+        public double Strength { get; set; } = 100;
 
         public void Kill(string cause)
         {

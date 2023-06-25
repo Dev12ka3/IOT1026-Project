@@ -45,7 +45,7 @@
         {
             Location start = PlaceEntrance(map);
             PlaceSword(map, start);
-            AddRooms(RoomType.Pit, map);
+            AddRooms(RoomType.ElementalRoom, map);
             InitializeMonsters(map);
             return start;
         }
@@ -84,7 +84,7 @@
             int numRooms = map.Rows * map.Columns * multiplier / ScalingFactor;
             for (int i = 0; i < numRooms; ++i)
             {
-                map.SetRoomAtLocation(ProceduralGenerator.GetRandomLocation(), roomType);
+                map.SetRoomAtLocation(ProceduralGenerator.GetRandomLocation(), RoomType.ElementalRoom);
             }
         }
 
