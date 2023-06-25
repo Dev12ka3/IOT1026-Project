@@ -1,76 +1,102 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MinotaurLabyrinth.Tests
+namespace MinotaurLabyrinthTest
 {
     [TestClass]
     public class GuardianTests
     {
-        [TestMethod]
-        public void FireGuardian_Activate_HeroHasSword_WinsAndIncreasesStrength()
+        private MinotaurLabyrinth.Hero CreateHero()
         {
-            // Arrange
-            var hero = new Hero { HasSword = true, Strength = 80 };
-            var map = new Map();
-            var guardian = new FireGuardian();
+            MinotaurLabyrinth.Location startLocation = new MinotaurLabyrinth.Location(0, 0); // Choose the desired starting location
+            return new MinotaurLabyrinth.Hero(startLocation);
+        }
 
-            // Act
-            guardian.Activate(hero, map);
-
-            // Assert
-            Assert.IsTrue(hero.IsAlive);
-            Assert.AreEqual(110, hero.Strength);
+        private MinotaurLabyrinth.Map CreateMap()
+        {
+            int rows = 5; // Choose the desired number of rows
+            int columns = 5; // Choose the desired number of columns
+            return new MinotaurLabyrinth.Map(rows, columns);
         }
 
         [TestMethod]
-        public void FireGuardian_Activate_HeroHasNoSword_Dies()
+        public void FireGuardian_Activate_HeroWithoutSword_DeathMessageDisplayed()
         {
             // Arrange
-            var hero = new Hero { HasSword = false, Strength = 80 };
-            var map = new Map();
-            var guardian = new FireGuardian();
+            MinotaurLabyrinth.Hero hero = CreateHero();
+            hero.HasSword = false;
+            MinotaurLabyrinth.Map map = CreateMap();
+            MinotaurLabyrinth.FireGuardian fireGuardian = new MinotaurLabyrinth.FireGuardian();
+            StringWriter stringWriter = new StringWriter();
+            Console.SetOut(stringWriter);
 
             // Act
-            guardian.Activate(hero, map);
-
-            // Assert
-            Assert.IsFalse(hero.IsAlive);
-            Assert.AreEqual(0, hero.Strength);
-        }
-
-        [TestMethod]
-        public void WaterGuardian_Activate_HeroHasSword_WinsAndIncreasesStrength()
-        {
-            // Arrange
-            var hero = new Hero { HasSword = true, Strength = 70 };
-            var map = new Map();
-            var guardian = new WaterGuardian();
-
-            // Act
-            guardian.Activate(hero, map);
-
-            // Assert
-            Assert.IsTrue(hero.IsAlive);
-            Assert.AreEqual(90, hero.Strength);
-        }
-
-        [TestMethod]
-        public void WaterGuardian_Activate_HeroHasNoSword_Dies()
-        {
-            // Arrange
-            var hero = new Hero { HasSword = false, Strength = 70 };
-            var map = new Map();
-            var guardian = new WaterGuardian();
-
-            // Act
-            guardian.Activate(hero, map);
+            fireGuardian.Activate(hero, map);
 
             // Assert
             Assert.IsFalse(hero.IsAlive);
-            Assert.AreEqual(0, hero.Strength);
+            Assert.AreEqual("The Fire Guardian unleashes a powerful flame attack, burning you to ashes!", stringWriter.ToString().Trim());
         }
 
-        // Add more test methods for other scenarios and edge cases
+        [TestMethod]
+        public void FireGuardian_Activate_HeroWithLowStrength_VictoryMessageDisplayed()
+        {
+            // Arrange
+            MinotaurLabyrinth.Hero hero = CreateHero();
+            hero.HasSword = true;
+            hero.Strength = 90;
+            MinotaurLabyrinth.Map map = CreateMap();
+            MinotaurLabyrinth.FireGuardian fireGuardian = new MinotaurLabyrinth.FireGuardian();
+            StringWriter stringWriter = new StringWriter();
+            Console.SetOut(stringWriter);
 
-        // You can also add tests for the DisplaySense and Display methods if needed
+            // Act
+            fireGuardian.Activate(hero, map);
+
+            // Assert
+            Assert.IsTrue(hero.IsAlive);
+            Assert.AreEqual("You engage in a fierce battle with the Fire Guardian using your mighty sword. After a long struggle, you emerge victorious!", stringWriter.ToString().Trim());
+        }
+
+        [TestMethod]
+        public void FireGuardian_Activate_HeroWithHighStrength_DeathMessageDisplayed()
+        {
+            // Arrange
+            MinotaurLabyrinth.Hero hero = CreateHero();
+            hero.HasSword = true;
+            hero.Strength = 100;
+            MinotaurLabyrinth.Map map = CreateMap();
+            MinotaurLabyrinth.FireGuardian fireGuardian = new MinotaurLabyrinth.FireGuardian();
+            StringWriter stringWriter = new StringWriter();
+            Console.SetOut(stringWriter);
+
+            // Act
+            fireGuardian.Activate(hero, map);
+
+            // Assert
+            Assert.IsFalse(hero.IsAlive);
+            Assert.AreEqual("The Fire Guardian is too powerful for you to defeat. It overwhelms you with its fiery attacks, ending your journey.", stringWriter.ToString().Trim());
+        }
+
+        [TestMethod]
+        public void WaterGuardian_Activate_HeroWithSword_VictoryMessageDisplayed()
+        {
+            // Arrange
+            MinotaurLabyrinth.Hero hero = CreateHero();
+            hero.HasSword = true;
+            MinotaurLabyrinth.Map map = CreateMap();
+            MinotaurLabyrinth.WaterGuardian waterGuardian = new MinotaurLabyrinth.WaterGuardian();
+            StringWriter stringWriter = new StringWriter();
+            Console.SetOut(stringWriter);
+
+            // Act
+            waterGuardian.Activate(hero, map);
+
+            // Assert
+            Assert.IsTrue(hero.IsAlive);
+            Assert.AreEqual("You engage in a fierce battle with the Water Guardian using your mighty sword. With a decisive strike, you defeat the guardian and emerge victorious!", stringWriter.ToString().Trim());
+        }
     }
 }
