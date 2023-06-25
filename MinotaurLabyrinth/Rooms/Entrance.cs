@@ -6,13 +6,16 @@
         {
             RoomFactory.Instance.Register(RoomType.Entrance, () => new Entrance());
         }
+
         public override RoomType Type { get; } = RoomType.Entrance;
         public override bool IsActive { get; protected set; } = true;
+
         public override void Activate(Hero hero, Map map)
         {
             if (hero.HasSword)
                 hero.IsVictorious = true;
         }
+
         public override DisplayDetails Display()
         {
             return new DisplayDetails($"[{Type.ToString()[0]}]", ConsoleColor.DarkGreen);
@@ -27,6 +30,7 @@
                 ConsoleHelper.WriteLine("You hear birds chirping faintly in the distance. An entrance should be nearby.", ConsoleColor.Yellow);
             else
                 return false;
+
             return true;
         }
     }

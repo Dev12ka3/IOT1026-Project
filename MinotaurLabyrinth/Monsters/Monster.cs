@@ -14,7 +14,7 @@
         /// Gets or sets the name of the monster.
         /// </summary>
         public string? Name { get; set; }
-        
+
         /// <summary>
         /// Gets or sets the element of the monster.
         /// </summary>

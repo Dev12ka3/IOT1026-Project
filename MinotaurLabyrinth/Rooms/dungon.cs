@@ -7,8 +7,6 @@ namespace MinotaurLabyrinth
         
         public override RoomType Type => RoomType.ElementalRoom;
 
-       
-
         public override bool DisplaySense(Hero hero, int heroDistance)
         {
             if (_monster != null && heroDistance <= 2)  // Display sense if hero is close enough

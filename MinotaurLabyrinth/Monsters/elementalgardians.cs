@@ -129,7 +129,6 @@ namespace MinotaurLabyrinth
             return false;
         }
 
-
         public override DisplayDetails Display()
         {
             return new DisplayDetails("[E]", ConsoleColor.DarkMagenta);
